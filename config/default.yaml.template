@@ -1,0 +1,11 @@
+ollama:
+  base_url: "http://localhost:11434" # url running ollama service
+  model: "gemma3:1b" # LLM model available in ollama lib
+  embedding_model: "nomic-embed-text" # Embedding model available in ollama lib
+vectordb:
+  db_root: "./data/vectordb" # Root directory of vector db
+  search_k: 3 # Increase to get more context chunks
+  chunk_size: 1000 # Size of each chunk in tokens
+  chunk_overlap: 200 # Overlap between chunks in tokens
+file_tracker:
+  track_file: ".file_tracking.json" # Placed in the persist_directory of vector storage
