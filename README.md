@@ -146,3 +146,45 @@ You will see the following prompt
 ```shell
 Enter your question (or type 'quit/q/exit' to exit):
 ```
+
+## Use Ollama with Open WebUI interface (through Docker network)
+1. Create a Docker network
+```shell
+docker network create ollama-network
+```
+
+2. Start Ollama container
+```shell
+docker run -d --gpus=all --network ollama-network --name ollama --env NVIDIA_DRIVER_CAPABILITIES=compute,utility --env CUDA_MEMORY_FRACTION=0.8 -v ollama:/root/.ollama -p 11434:11434 ollama/ollama
+```
+
+3. Start Open WebUI container
+```shell
+docker run -d --network ollama-network --name open-webui -p 3000:8080 -e OLLAMA_BASE_URL=http://ollama:11434 -v open-webui:/app/backend/data --restart always ghcr.io/open-webui/open-webui:main
+```
+
+4. Access the web interface at `http://localhost:3000`
+
+### Docker network debugging
+
+If you need to verify container connectivity:
+
+- Check network status:
+```shell
+docker network inspect ollama-network
+```
+
+- Test container communication:
+```shell
+# Install wget in the open-webui container before testing
+docker exec -it open-webui sh -c "apt update && apt install -y wget"
+docker exec -it open-webui wget -qO- http://ollama:11434/api/version
+```
+
+- View container logs:
+```powershell
+docker logs open-webui
+docker logs ollama
+```
+
+These commands help diagnose connection issues between containers.
