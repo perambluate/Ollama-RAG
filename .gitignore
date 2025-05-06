@@ -1,3 +1,21 @@
+# Vector database files
+data/vectordb/*
+data/.file_tracking.json
+
+# Configuration files
+config/*.yaml
+
+# IDE settings
+.vscode/
+
+# User materials
+materials/*
+!materials/samples/
+
+# Temp files
+*.tmp
+*.bak
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -135,6 +153,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.conda/
 
 # Spyder project settings
 .spyderproject
